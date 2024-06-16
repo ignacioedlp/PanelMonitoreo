@@ -30,12 +30,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CardTitle, CardHeader, CardContent, Card, CardDescription } from "@/components/ui/card"
-import moment from "moment"
+import moment from "moment-timezone"
 import Heatmaps from "./heatmap"
 import { LineChart } from "./line-chart"
 
 export function Dashboard({ items, temperature, humidity, temperatureHeatmapData,
-  humidityHeatmapData }: { items: any[], temperature: any[], humidity: any[], temperatureHeatmapData: any, humidityHeatmapData: any }) {
+  humidityHeatmapData, setMinutes, minutes }: { items: any[], temperature: any[], humidity: any[], temperatureHeatmapData: any, humidityHeatmapData: any, setMinutes: any, minutes: any }) {
   return (
     <div className="flex h-screen w-full bg-gray-100">
       <div className="w-[500px] bg-gray-100 p-6 h-screen flex flex-col">
@@ -54,10 +54,11 @@ export function Dashboard({ items, temperature, humidity, temperatureHeatmapData
               {
                 items?.map((item) => (
                   <TableRow key={item._id}>
-                    <TableCell>{moment(item.datetime).fromNow()}</TableCell>
+                    <TableCell>{moment.utc(item.timestamp).tz("America/Argentina/Buenos_Aires").format("HH:mm A")}</TableCell>
                     <TableCell>{item.temperature}°C</TableCell>
                     <TableCell>{item.humidity}%</TableCell>
-                    <TableCell>{item.zone}</TableCell>
+                    <TableCell>{item.area}</TableCell>
+                    <TableCell>{item.area}</TableCell>
                   </TableRow>
                 ))
               }
@@ -74,14 +75,14 @@ export function Dashboard({ items, temperature, humidity, temperatureHeatmapData
               <PopoverTrigger asChild>
                 <Button className="w-[280px] justify-start text-left font-normal text-black" id="date" variant="outline">
                   <CalendarClockIcon className="mr-2 h-4 w-4 text-black" />
-                  Last 10 minutes
+                  Last {minutes} minutes
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="end" className="w-auto p-0">
                 <div className="grid gap-2 p-2">
-                  <Button variant="link">Last minute</Button>
-                  <Button variant="link">Last 5 minutes</Button>
-                  <Button variant="link">Last 10 minutes</Button>
+                  <Button variant="link" onClick={() => setMinutes(5)}>Last 5 minute</Button>
+                  <Button variant="link" onClick={() => setMinutes(10)}>Last 10 minutes</Button>
+                  <Button variant="link" onClick={() => setMinutes(15)}>Last 15 minutes</Button>
                 </div>
               </PopoverContent>
             </Popover>
