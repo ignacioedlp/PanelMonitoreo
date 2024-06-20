@@ -6,12 +6,17 @@ export function LineChart({ data, ...props }) {
       <ResponsiveLine
         data={data}
         margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
+        
         xScale={{
           type: "point",
+          
         }}
         yScale={{
           type: "linear",
+          max: 40,
+
         }}
+       
         axisTop={null}
         axisRight={null}
         axisBottom={{
@@ -27,6 +32,7 @@ export function LineChart({ data, ...props }) {
         pointSize={6}
         useMesh={true}
         gridYValues={6}
+        gridXValues={5}
         theme={{
           tooltip: {
             chip: {

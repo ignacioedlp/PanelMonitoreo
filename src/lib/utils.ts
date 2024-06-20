@@ -13,7 +13,7 @@ export function group(data: any, key: string) {
       acc[area] = [];
     }
     acc[area].push({
-      x: moment.utc(item.timestamp).tz("America/Argentina/Buenos_Aires").format("HH:mm A"),
+      x: moment.utc(item.timestamp).tz("America/Argentina/Buenos_Aires").format("HH:mm"),
       y: item[key]
     });
     return acc;

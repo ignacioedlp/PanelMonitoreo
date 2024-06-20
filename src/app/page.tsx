@@ -11,17 +11,20 @@ export default function Home() {
   const [humidityHeatmapData, setHumidityHeatmapData] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [minutes, setMinutes] = useState(10);
+  const [time, setTime] = useState({
+    value: 5,
+    key: "minutes"
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/items?minutes=${minutes}`).then((res) => res.json())
+    fetch(`/api/items?key=${time.key}&value=${time.value}`).then((res) => res.json())
       .then((data) => {
         if (data) {
           console.table(data);
           const allItems = data.data.flatMap(zone => zone.items);
-          const sortedItems = allItems.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+          const sortedItems = allItems;
 
           const groupedDataTemperature = group(allItems, 'temperature');
           const groupedDataHumidity = group(allItems, 'humidity');
@@ -33,7 +36,7 @@ export default function Home() {
           setHumidityHeatmapData(humidityTreemapData);
           setHumidity(groupedDataTemperature);
           setTemperature(groupedDataHumidity);
-          setItems(sortedItems);
+          setItems(sortedItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
           setLoading(false);
 
         }
@@ -45,12 +48,12 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/items?minutes=${minutes}`).then((res) => res.json())
+    fetch(`/api/items?key=${time.key}&value=${time.value}`).then((res) => res.json())
       .then((data) => {
         if (data) {
           console.table(data);
           const allItems = data.data.flatMap(zone => zone.items);
-          const sortedItems = allItems.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+          const sortedItems = allItems;
 
           const groupedDataTemperature = group(allItems, 'temperature');
           const groupedDataHumidity = group(allItems, 'humidity');
@@ -60,9 +63,9 @@ export default function Home() {
 
           setTemperatureHeatmapData(temperatureTreemapData);
           setHumidityHeatmapData(humidityTreemapData);
-          setHumidity(groupedDataTemperature);
-          setTemperature(groupedDataHumidity);
-          setItems(sortedItems);
+          setHumidity(groupedDataHumidity);
+          setTemperature(groupedDataTemperature);
+          setItems(sortedItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
           setLoading(false);
 
         }
@@ -70,7 +73,7 @@ export default function Home() {
         setError(error.message);
         setLoading(false);
       })
-  }, [minutes]);
+  }, [time]);
 
 
   if (error) {
@@ -82,6 +85,6 @@ export default function Home() {
   }
 
   return (
-    <Dashboard items={items} humidity={humidity} temperature={temperature} temperatureHeatmapData={temperatureHeatmapData} humidityHeatmapData={humidityHeatmapData} setMinutes={setMinutes} minutes={minutes} />
+    <Dashboard items={items} humidity={humidity} temperature={temperature} temperatureHeatmapData={temperatureHeatmapData} humidityHeatmapData={humidityHeatmapData} setTime={setTime} time={time} />
   );
 }
