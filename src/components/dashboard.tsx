@@ -78,7 +78,7 @@ export function Dashboard({
   return (
     <div className="flex flex-1 w-full bg-white">
       <div className="max-w-[500px] bg-white p-6 flex flex-col flex-1 h-screen">
-        <h2 className="mb-4 text-lg font-medium">Informacion reciente</h2>
+        <h2 className="mb-4 text-lg text-black font-medium">Informacion reciente</h2>
         <div className="flex-1 overflow-y-auto">
           <Table>
             <TableHeader>

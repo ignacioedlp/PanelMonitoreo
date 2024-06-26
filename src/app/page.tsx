@@ -29,8 +29,8 @@ export default function Home() {
           const groupedDataTemperature = group(allItems, 'temperature');
           const groupedDataHumidity = group(allItems, 'humidity');
 
-          const temperatureTreemapData = groupedHeatmapData(sortedItems, 'temperature');
-          const humidityTreemapData = groupedHeatmapData(sortedItems, 'humidity');
+          const temperatureTreemapData = groupedHeatmapData(sortedItems.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)), 'temperature');
+          const humidityTreemapData = groupedHeatmapData(sortedItems.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)), 'humidity');
 
           setTemperatureHeatmapData(temperatureTreemapData);
           setHumidityHeatmapData(humidityTreemapData);
@@ -58,8 +58,8 @@ export default function Home() {
           const groupedDataTemperature = group(allItems, 'temperature');
           const groupedDataHumidity = group(allItems, 'humidity');
 
-          const temperatureTreemapData = groupedHeatmapData(sortedItems, 'temperature');
-          const humidityTreemapData = groupedHeatmapData(sortedItems, 'humidity');
+          const temperatureTreemapData = groupedHeatmapData(sortedItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)), 'temperature');
+          const humidityTreemapData = groupedHeatmapData(sortedItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)), 'humidity');
 
           setTemperatureHeatmapData(temperatureTreemapData);
           setHumidityHeatmapData(humidityTreemapData);

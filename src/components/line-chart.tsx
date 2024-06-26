@@ -5,7 +5,7 @@ export function LineChart({ data, ...props }) {
     <div {...props}>
       <ResponsiveLine
         data={data}
-        margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
+        margin={{ top: 10, right: 15, bottom: 40, left: 40 }}
         
         xScale={{
           type: "point",

@@ -45,7 +45,6 @@ export async function GET(request) {
         .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
         .filter(item => {
           const itemDate = moment.utc(item.timestamp).tz("America/Argentina/Buenos_Aires");
-          console.log(itemDate, filterDate, itemDate >= filterDate)
           return itemDate >= filterDate;
         })
     }));
